@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurante Gourmet</title>
+    <title>Menu</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -14,15 +14,16 @@
         }
 
         :root {
-            --primary: #c9a227;
-            --primary-dark: #a88420;
-            --secondary: #1a1a1a;
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --surface-light: #1f1f1f;
-            --text: #f5f5f5;
-            --text-muted: #888888;
-            --border: #2a2a2a;
+            --primary: #1a1a1a;
+            --primary-light: #333333;
+            --secondary: #c9a227;
+            --bg: #ffffff;
+            --surface: #f8f8f8;
+            --surface-hover: #f0f0f0;
+            --text: #1a1a1a;
+            --text-muted: #666666;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
 
         body {
@@ -30,7 +31,7 @@
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         /* ANIMACIÓN DE CARGA */
@@ -46,7 +47,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         .loader-container.hidden {
@@ -59,10 +60,9 @@
         }
 
         .loader-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 2rem;
-            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
         }
 
         .loader-icon svg {
@@ -79,27 +79,27 @@
 
         .loader-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 400;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.15em;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
         .loader-subtitle {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            letter-spacing: 0.3em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         .loader-line {
-            width: 250px;
+            width: 200px;
             height: 2px;
-            background: var(--surface-light);
-            margin: 2.5rem auto 0;
+            background: var(--border);
+            margin: 2rem auto 0;
             position: relative;
             overflow: hidden;
         }
@@ -122,8 +122,8 @@
         /* CONTENIDO PRINCIPAL */
         .main-content {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
         .main-content.visible {
@@ -133,9 +133,9 @@
 
         /* HEADER */
         header {
-            background: var(--surface);
+            background: var(--bg);
             border-bottom: 1px solid var(--border);
-            padding: 1.5rem 2rem;
+            padding: 1.25rem 1.5rem;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -151,104 +151,106 @@
 
         .logo {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 400;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .logo-icon {
-            width: 36px;
-            height: 36px;
+            width: 28px;
+            height: 28px;
             fill: var(--primary);
         }
 
         /* CONTENEDOR */
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 3rem;
         }
 
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 400;
             letter-spacing: 0.1em;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             line-height: 1;
+            color: var(--primary);
         }
 
         .section-subtitle {
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 0.05em;
         }
 
         /* CATEGORÍAS */
         .category-section {
-            margin-bottom: 5rem;
+            margin-bottom: 3rem;
         }
 
         .category-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1rem;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
             border-bottom: 2px solid var(--primary);
         }
 
         .category-icon {
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             fill: var(--primary);
         }
 
         .category-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 400;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             color: var(--primary);
         }
 
         .category-count {
             margin-left: auto;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 400;
-            letter-spacing: 0.1em;
         }
 
-        /* LISTA DE PRODUCTOS - VISTA MINIMALISTA */
+        /* LISTA DE PRODUCTOS */
         .product-list {
             display: flex;
             flex-direction: column;
             border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow);
         }
 
         .product-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 2rem;
+            padding: 1rem 1.25rem;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: var(--surface);
+            transition: all 0.25s ease;
+            background: var(--bg);
         }
 
         .product-item:last-child {
@@ -256,63 +258,71 @@
         }
 
         .product-item:hover {
-            background: var(--surface-light);
-            padding-left: 2.5rem;
+            background: var(--surface-hover);
+            padding-left: 1.5rem;
         }
 
         .product-info {
             flex: 1;
+            min-width: 0;
+            padding-right: 1rem;
         }
 
         .product-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
             color: var(--text);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .product-description-preview {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            font-weight: 300;
-            max-width: 500px;
+            font-weight: 400;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
+        .product-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
         .product-price {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 400;
             color: var(--primary);
-            margin-right: 2rem;
-            min-width: 100px;
-            text-align: right;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
         }
 
         .btn-view {
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-muted);
             font-family: 'Poppins', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            border-radius: 4px;
+            white-space: nowrap;
         }
 
         .btn-view:hover {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(201, 162, 39, 0.05);
+            background: var(--surface);
         }
 
         /* MODAL */
@@ -322,14 +332,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
+            padding: 1rem;
         }
 
         .modal-overlay.active {
@@ -338,15 +349,16 @@
         }
 
         .modal {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            max-width: 650px;
-            width: 90%;
+            background: var(--bg);
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            transform: scale(0.95) translateY(20px);
-            transition: all 0.4s ease;
+            transform: scale(0.95) translateY(10px);
+            transition: all 0.3s ease;
             position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .modal-overlay.active .modal {
@@ -355,35 +367,41 @@
 
         .modal-close {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--surface-light);
-            border: 1px solid var(--border);
-            width: 45px;
-            height: 45px;
-            color: var(--text-muted);
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--text);
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 300;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.2s;
             z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .modal-close:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            background: var(--primary);
+            color: white;
             transform: rotate(90deg);
         }
 
         .modal-image-container {
             width: 100%;
-            height: 350px;
+            height: 250px;
             overflow: hidden;
-            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         .modal-image {
@@ -392,101 +410,108 @@
             object-fit: cover;
         }
 
+        .modal-image-placeholder {
+            width: 80px;
+            height: 80px;
+            fill: var(--border);
+        }
+
+        .modal-image-error {
+            display: none;
+        }
+
         .modal-body {
-            padding: 3rem;
+            padding: 1.5rem;
         }
 
         .modal-category {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
-            color: var(--primary);
-            letter-spacing: 0.2em;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .modal-category svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--primary);
+            width: 14px;
+            height: 14px;
+            fill: var(--text-muted);
         }
 
         .modal-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
+            font-size: 2.2rem;
             font-weight: 400;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.75rem;
             color: var(--text);
             line-height: 1.1;
         }
 
         .modal-price {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: var(--primary);
             font-weight: 400;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.02em;
         }
 
         .modal-description {
             font-family: 'Poppins', sans-serif;
             color: var(--text-muted);
-            line-height: 1.9;
-            margin-bottom: 3rem;
-            font-size: 1rem;
-            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 400;
         }
 
         /* SISTEMA DE VALORACIÓN */
         .rating-section {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 2rem;
-            margin-bottom: 2rem;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
         .rating-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid var(--border);
         }
 
         .rating-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 400;
-            letter-spacing: 0.1em;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
             color: var(--text);
         }
 
         .current-rating {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .current-rating-value {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 400;
             color: var(--primary);
         }
 
         .rating-stars-display {
-            color: var(--primary);
-            font-size: 1.2rem;
-            letter-spacing: 0.1em;
+            color: var(--secondary);
+            font-size: 1rem;
+            letter-spacing: 0.05em;
         }
 
         .user-rating-section {
@@ -495,48 +520,45 @@
 
         .user-rating-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
             font-weight: 400;
         }
 
         .rating-stars {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .rating-star {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
+            font-size: 2.2rem;
             color: var(--border);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             user-select: none;
             line-height: 1;
         }
 
         .rating-star:hover {
-            transform: scale(1.15);
-            color: var(--primary);
+            transform: scale(1.1);
+            color: var(--secondary);
         }
 
         .rating-star.active {
-            color: var(--primary);
-            animation: starPop 0.3s ease;
+            color: var(--secondary);
+            animation: starPop 0.25s ease;
         }
 
         .rating-star.hovered {
-            color: var(--primary-dark);
+            color: #e6c860;
         }
 
         @keyframes starPop {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.15); }
             100% { transform: scale(1); }
         }
 
@@ -544,10 +566,9 @@
             text-align: center;
             color: var(--text-muted);
             font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            font-weight: 300;
-            min-height: 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 400;
+            min-height: 1.25rem;
         }
 
         /* BOTÓN CERRAR MODAL */
@@ -557,105 +578,180 @@
         }
 
         .btn-close-modal {
-            padding: 1rem 3rem;
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
+            padding: 0.875rem 2.5rem;
+            background: var(--primary);
+            border: none;
+            color: white;
             font-family: 'Poppins', sans-serif;
             font-size: 0.85rem;
             font-weight: 500;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            border-radius: 6px;
         }
 
         .btn-close-modal:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: rgba(201, 162, 39, 0.05);
+            background: var(--primary-light);
+            transform: translateY(-1px);
         }
 
         /* NOTIFICACIÓN */
         .notification {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--surface);
-            border: 1px solid var(--primary);
-            color: var(--text);
-            padding: 1.25rem 2rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
             transform: translateX(400px);
-            transition: transform 0.4s ease;
+            transition: transform 0.3s ease;
             z-index: 2000;
             font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .notification.show {
             transform: translateX(0);
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
+        /* RESPONSIVE - MÓVIL MEJORADO */
+        @media (max-width: 640px) {
             .loader-title {
                 font-size: 2.5rem;
             }
 
             .section-title {
-                font-size: 3rem;
+                font-size: 2.8rem;
+            }
+
+            .container {
+                padding: 1.5rem 0.75rem;
+            }
+
+            .category-header {
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+            }
+
+            .category-title {
+                font-size: 1.3rem;
+            }
+
+            .category-icon {
+                width: 20px;
+                height: 20px;
             }
 
             .product-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                padding: 1.25rem;
-            }
-
-            .product-price {
-                margin-right: 0;
-                text-align: left;
-            }
-
-            .btn-view {
-                align-self: stretch;
-                text-align: center;
-            }
-
-            .modal-title {
-                font-size: 2rem;
-            }
-
-            .modal-price {
-                font-size: 1.8rem;
-            }
-
-            .rating-stars {
+                padding: 0.875rem 1rem;
+                flex-wrap: wrap;
                 gap: 0.5rem;
             }
 
+            .product-item:hover {
+                padding-left: 1.125rem;
+            }
+
+            .product-info {
+                width: 100%;
+                padding-right: 0;
+                margin-bottom: 0.5rem;
+            }
+
+            .product-name {
+                font-size: 0.95rem;
+                white-space: normal;
+                line-height: 1.3;
+            }
+
+            .product-description-preview {
+                display: none;
+            }
+
+            .product-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .product-price {
+                font-size: 1.2rem;
+            }
+
+            .btn-view {
+                padding: 0.4rem 0.875rem;
+                font-size: 0.7rem;
+            }
+
+            .modal-image-container {
+                height: 200px;
+            }
+
+            .modal-body {
+                padding: 1.25rem;
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-price {
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .modal-description {
+                font-size: 0.9rem;
+            }
+
             .rating-star {
+                font-size: 1.8rem;
+            }
+
+            .btn-close-modal {
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .section-title {
                 font-size: 2.2rem;
+            }
+
+            .product-name {
+                font-size: 0.9rem;
+            }
+
+            .product-price {
+                font-size: 1.1rem;
+            }
+
+            .btn-view {
+                padding: 0.35rem 0.75rem;
+                font-size: 0.65rem;
             }
         }
 
         /* SCROLLBAR */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--bg);
+            background: var(--surface);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--surface-light);
+            background: var(--border);
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
+            background: var(--text-muted);
         }
     </style>
 </head>
@@ -668,8 +764,8 @@
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                 </svg>
             </div>
-            <div class="loader-title">GOURMET</div>
-            <div class="loader-subtitle">Cargando experiencia culinaria</div>
+            <div class="loader-title">MENU</div>
+            <div class="loader-subtitle">Cargando</div>
             <div class="loader-line">
                 <div class="loader-progress"></div>
             </div>
@@ -684,15 +780,15 @@
                     <svg class="logo-icon" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                     </svg>
-                    <span>RESTAURANTE GOURMET</span>
+                    <span>MENU</span>
                 </div>
             </div>
         </header>
 
         <div class="container">
             <div class="section-header">
-                <h1 class="section-title">MENÚ</h1>
-                <p class="section-subtitle">Descubre nuestra selección de platos</p>
+                <h1 class="section-title">MENU</h1>
+                <p class="section-subtitle">Selección de platos</p>
             </div>
 
             <div id="menuContainer">
@@ -705,8 +801,11 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">×</button>
-            <div class="modal-image-container">
-                <img src="" alt="" class="modal-image" id="modalImage">
+            <div class="modal-image-container" id="modalImageContainer">
+                <img src="" alt="" class="modal-image" id="modalImage" onerror="handleImageError(this)">
+                <svg class="modal-image-placeholder modal-image-error" id="modalPlaceholder" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
             </div>
             <div class="modal-body">
                 <div class="modal-category" id="modalCategory">
@@ -719,7 +818,7 @@
                 
                 <div class="rating-section">
                     <div class="rating-header">
-                        <span class="rating-title">Valoración de clientes</span>
+                        <span class="rating-title">Valoración</span>
                         <div class="current-rating">
                             <span class="current-rating-value" id="currentRating">0.0</span>
                             <span class="rating-stars-display" id="ratingStarsDisplay"></span>
@@ -727,7 +826,7 @@
                     </div>
                     
                     <div class="user-rating-section">
-                        <div class="user-rating-title">¿Qué te pareció este plato?</div>
+                        <div class="user-rating-title">¿Qué te pareció?</div>
                         <div class="rating-stars" id="ratingStars">
                             <span class="rating-star" data-value="1">★</span>
                             <span class="rating-star" data-value="2">★</span>
@@ -735,7 +834,7 @@
                             <span class="rating-star" data-value="4">★</span>
                             <span class="rating-star" data-value="5">★</span>
                         </div>
-                        <div class="rating-text" id="ratingText">Selecciona una estrella para valorar</div>
+                        <div class="rating-text" id="ratingText">Selecciona una estrella</div>
                     </div>
                 </div>
 
@@ -869,12 +968,14 @@
                             <div class="product-item" onclick="openModal(${product.id}, '${category}')">
                                 <div class="product-info">
                                     <div class="product-name">${product.name}</div>
-                                    <div class="product-description-preview">${product.description.substring(0, 60)}...</div>
+                                    <div class="product-description-preview">${product.description.substring(0, 50)}...</div>
                                 </div>
-                                <div class="product-price">$${product.price.toFixed(2)}</div>
-                                <button class="btn-view" onclick="event.stopPropagation(); openModal(${product.id}, '${category}')">
-                                    Ver más
-                                </button>
+                                <div class="product-right">
+                                    <div class="product-price">$${product.price.toFixed(2)}</div>
+                                    <button class="btn-view" onclick="event.stopPropagation(); openModal(${product.id}, '${category}')">
+                                        Ver Detalles
+                                    </button>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -889,12 +990,24 @@
             return menuData[category].find(p => p.id === id);
         }
 
+        // MANEJAR ERROR DE IMAGEN
+        function handleImageError(img) {
+            img.style.display = 'none';
+            document.getElementById('modalPlaceholder').style.display = 'block';
+        }
+
         // ABRIR MODAL
         function openModal(productId, category) {
             currentProduct = findProduct(productId, category);
             if (!currentProduct) return;
 
-            document.getElementById('modalImage').src = currentProduct.image;
+            // Resetear imagen
+            const img = document.getElementById('modalImage');
+            const placeholder = document.getElementById('modalPlaceholder');
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+            img.src = currentProduct.image;
+
             document.getElementById('modalCategoryText').textContent = category;
             document.querySelector('.modal-category svg path').setAttribute('d', categoryIcons[category] || categoryIcons['Carnes']);
             document.getElementById('modalTitle').textContent = currentProduct.name;
@@ -928,7 +1041,7 @@
         // SISTEMA DE VALORACIÓN
         const stars = document.querySelectorAll('.rating-star');
         const ratingTexts = [
-            "Selecciona una estrella para valorar",
+            "Selecciona una estrella",
             "No me gustó",
             "Estuvo bien",
             "Buen sabor",
@@ -947,7 +1060,7 @@
                 selectedRating = parseInt(star.dataset.value);
                 updateStarDisplay(selectedRating);
                 
-                star.style.transform = 'scale(1.15)';
+                star.style.transform = 'scale(1.1)';
                 setTimeout(() => {
                     star.style.transform = '';
                 }, 200);
