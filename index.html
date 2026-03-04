@@ -3,675 +3,998 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Gourmet | Sabor & Arte</title>
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Courier+Prime&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Librería para generar QR -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
+    <title>Restaurante Gourmet</title>
     <style>
-        /* --- VARIABLES & RESET --- */
-        :root {
-            --primary: #d35400;
-            --secondary: #2c3e50;
-            --bg-light: #f8f9fa;
-            --white: #ffffff;
-            --text-dark: #2c3e50;
-            --text-gray: #6c757d;
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            --radius: 16px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap');
         
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            -webkit-tap-highlight-color: transparent;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        :root {
+            --primary: #c9a227;
+            --primary-dark: #a88420;
+            --secondary: #1a1a1a;
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface-light: #1f1f1f;
+            --text: #f5f5f5;
+            --text-muted: #888888;
+            --border: #2a2a2a;
+        }
 
-        /* --- HEADER --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        /* ANIMACIÓN DE CARGA */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loader-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .loader-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .loader-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .loader-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .loader-line {
+            width: 250px;
+            height: 2px;
+            background: var(--surface-light);
+            margin: 2.5rem auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            animation: loadProgress 3s ease-out forwards;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .main-content {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HEADER */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            fill: var(--primary);
+        }
+
+        /* CONTENEDOR */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+
+        .section-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* CATEGORÍAS */
+        .category-section {
+            margin-bottom: 5rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .category-icon {
+            width: 32px;
+            height: 32px;
+            fill: var(--primary);
+        }
+
+        .category-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+        }
+
+        .category-count {
+            margin-left: auto;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+        }
+
+        /* LISTA DE PRODUCTOS - VISTA MINIMALISTA */
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+        }
+
+        .product-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        }
-
-        .logo { font-size: 1.5rem; color: var(--secondary); display: flex; align-items: center; gap: 10px; }
-        .logo i { color: var(--primary); }
-
-        .header-controls { display: flex; align-items: center; gap: 15px; }
-
-        .search-box { position: relative; display: none; }
-        .search-box input {
-            padding: 8px 15px 8px 35px;
-            border: 1px solid #eee;
-            border-radius: 20px;
-            font-family: inherit;
-            outline: none;
-            background: #f1f3f5;
-            width: 200px;
-            transition: 0.3s;
-        }
-        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-gray); }
-
-        .cart-icon {
-            position: relative;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
             cursor: pointer;
-            font-size: 1.3rem;
-            color: var(--secondary);
-            background: #f1f3f5;
-            width: 45px; height: 45px;
-            display: flex; justify-content: center; align-items: center;
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-        .cart-icon:hover { background: var(--primary); color: white; }
-        
-        .cart-count {
-            position: absolute; top: -2px; right: -2px;
-            background: #e74c3c; color: white;
-            font-size: 0.7rem; width: 20px; height: 20px;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-weight: 700; border: 2px solid white;
+            transition: all 0.3s ease;
+            background: var(--surface);
         }
 
-        /* --- HERO --- */
-        .hero {
-            text-align: center; padding: 3rem 1rem;
-            background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center;
-            color: white; margin-bottom: 2rem;
-        }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .hero p { font-size: 1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
-
-        /* --- FILTROS --- */
-        .filters-container {
-            display: flex; justify-content: center; gap: 10px;
-            margin-bottom: 2rem; padding: 0 1rem;
-            overflow-x: auto; white-space: nowrap;
-            padding-bottom: 10px;
-        }
-        .filters-container::-webkit-scrollbar { height: 4px; }
-        .filters-container::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
-
-        .filter-btn {
-            background: var(--white); border: 1px solid #eee;
-            padding: 10px 20px; border-radius: 30px;
-            cursor: pointer; font-weight: 600; color: var(--text-gray);
-            font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
-            transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--secondary); color: white; border-color: var(--secondary);
-            transform: translateY(-2px);
+        .product-item:last-child {
+            border-bottom: none;
         }
 
-        /* --- GRID MENÚ --- */
-        .menu-container {
-            max-width: 1200px; margin: 0 auto; padding: 0 1rem 4rem;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;
+        .product-item:hover {
+            background: var(--surface-light);
+            padding-left: 2.5rem;
         }
 
-        .menu-item {
-            background: var(--white); border-radius: var(--radius);
-            overflow: hidden; box-shadow: var(--shadow);
-            transition: transform 0.3s; position: relative;
-            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.03);
+        .product-info {
+            flex: 1;
         }
-        .menu-item:hover { transform: translateY(-5px); }
 
-        .item-img-wrapper { height: 220px; overflow: hidden; position: relative; }
-        .item-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .menu-item:hover .item-img { transform: scale(1.1); }
-
-        .badges { position: absolute; top: 15px; left: 15px; display: flex; flex-direction: column; gap: 5px; }
-        .badge {
-            padding: 5px 10px; border-radius: 6px; font-size: 0.75rem;
-            font-weight: 700; color: white; text-transform: uppercase;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 5px;
+        .product-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--text);
+            margin-bottom: 0.25rem;
         }
-        .badge-spicy { background-color: #e74c3c; }
-        .badge-vegan { background-color: #27ae60; }
-        .badge-star { background-color: #f1c40f; color: #333; }
 
-        .item-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
-        .item-title { font-size: 1.25rem; color: var(--secondary); line-height: 1.2; }
-        .item-price { color: var(--primary); font-weight: 700; font-size: 1.2rem; white-space: nowrap; margin-left: 10px;}
-        .item-desc { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; flex-grow: 1; }
+        .product-description-preview {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 500px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-        .item-actions { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 1rem; margin-top: auto; }
-        .btn-add {
-            background: var(--secondary); color: white; border: none;
-            padding: 10px 20px; border-radius: 8px; cursor: pointer;
-            font-weight: 600; font-family: 'Montserrat', sans-serif;
-            transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
+        .product-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--primary);
+            margin-right: 2rem;
+            min-width: 100px;
+            text-align: right;
+            letter-spacing: 0.05em;
         }
-        .btn-add:hover { background: var(--primary); }
-        .btn-details {
-            background: #f8f9fa; border: none; color: var(--text-gray);
-            width: 40px; height: 40px; border-radius: 8px; cursor: pointer;
-            transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-        }
-        .btn-details:hover { background: #e9ecef; color: var(--secondary); }
 
-        /* --- SIDEBAR CARRITO --- */
-        .cart-sidebar {
-            position: fixed; top: 0; right: -400px; width: 380px; height: 100%;
-            background: var(--white); box-shadow: -5px 0 25px rgba(0,0,0,0.1);
-            z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-            padding: 1.5rem; display: flex; flex-direction: column;
+        .btn-view {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        .cart-sidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #eee; }
-        .cart-header h3 { font-size: 1.5rem; color: var(--secondary); }
-        .close-cart { width: 35px; height: 35px; border-radius: 50%; background: #f1f3f5; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.2s; }
-        .close-cart:hover { background: #e74c3c; color: white; }
-        .cart-items { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 10px; background: #f8f9fa; border-radius: 10px; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .cart-item-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
-        .cart-item-info p { font-size: 0.85rem; color: var(--primary); font-weight: 600; }
-        .cart-total { margin-top: 1rem; border-top: 2px solid #eee; padding-top: 1rem; }
-        .total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; font-family: 'Montserrat', sans-serif; }
-        
-        .btn-checkout {
-            width: 100%; padding: 15px; background: var(--primary); color: white;
-            border: none; border-radius: 12px; font-weight: 700; font-size: 1rem;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(211, 84, 0, 0.3); transition: 0.3s;
-        }
-        .btn-checkout:hover { background: #ba4a00; transform: translateY(-2px); }
 
-        /* --- MODAL DETALLES --- */
+        .btn-view:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        /* MODAL */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 3000; display: none;
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; padding: 1rem;
-        }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content {
-            background: white; width: 100%; max-width: 500px;
-            border-radius: 20px; overflow: hidden; position: relative;
-            animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-height: 90vh; overflow-y: auto;
-        }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .modal-img { width: 100%; height: 250px; object-fit: cover; }
-        .modal-body { padding: 2rem; }
-        .modal-close {
-            position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9);
-            border: none; width: 35px; height: 35px; border-radius: 50%;
-            cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--secondary);
-        }
-
-        /* --- ESTILOS DEL VALE (TICKET) --- */
-        .receipt-modal {
-            max-width: 400px;
-            padding: 0;
-            background: #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-        }
-        .receipt-content {
-            padding: 2rem;
-            font-family: 'Courier Prime', monospace; /* Fuente tipo recibo */
-            color: #333;
-            text-align: center;
-        }
-        .receipt-header { margin-bottom: 1.5rem; border-bottom: 1px dashed #ccc; padding-bottom: 1rem; }
-        .receipt-logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; display: block; }
-        .receipt-info { font-size: 0.8rem; color: #666; line-height: 1.4; }
-        
-        .receipt-items { text-align: left; margin-bottom: 1.5rem; }
-        .receipt-item-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; }
-        .receipt-item-name { flex: 1; }
-        .receipt-item-price { font-weight: bold; }
-        
-        .receipt-total-section { border-top: 1px dashed #ccc; padding-top: 1rem; margin-bottom: 1.5rem; }
-        .receipt-total-row { display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; }
-        
-        .qr-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             justify-content: center;
-            margin: 1.5rem 0;
-            padding: 10px;
-            background: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 8px;
-        }
-        #qrcode { width: 120px; height: 120px; }
-        
-        .receipt-footer { font-size: 0.75rem; color: #888; margin-top: 1rem; }
-        
-        .btn-print {
-            background: var(--secondary); color: white; border: none;
-            padding: 10px 20px; border-radius: 8px; cursor: pointer;
-            width: 100%; margin-top: 10px; font-family: 'Montserrat', sans-serif;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
         }
 
-        /* --- FOOTER --- */
-        footer { background: var(--secondary); color: white; padding: 3rem 1rem; text-align: center; }
-        .social-icons { margin: 1.5rem 0; }
-        .social-icons a { color: white; margin: 0 10px; font-size: 1.2rem; transition: 0.3s; width: 40px; height: 40px; display: inline-flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.1); border-radius: 50%; }
-        .social-icons a:hover { background: var(--primary); transform: translateY(-3px); }
-
-        /* --- RESPONSIVE --- */
-        @media(max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .menu-container { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
-        @media(max-width: 500px) {
-            header { padding: 0.8rem 1rem; }
-            .logo span { display: none; }
-            .logo::after { content: 'S&A'; font-size: 1.2rem; margin-left: 5px; }
-            .search-box { display: none; }
-            .cart-sidebar { width: 100%; right: -100%; }
-            .menu-container { grid-template-columns: 1fr; gap: 1.5rem; padding: 0 1rem 3rem; }
-            .modal-content { border-radius: 20px 20px 0 0; position: absolute; bottom: 0; max-height: 85vh; }
+
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            max-width: 650px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            width: 45px;
+            height: 45px;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-image-container {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .modal-category {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: var(--primary);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .modal-category svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--primary);
+        }
+
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            color: var(--text);
+            line-height: 1.1;
+        }
+
+        .modal-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.05em;
+        }
+
+        .modal-description {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 3rem;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* SISTEMA DE VALORACIÓN */
+        .rating-section {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .rating-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--text);
+        }
+
+        .current-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .current-rating-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--primary);
+        }
+
+        .rating-stars-display {
+            color: var(--primary);
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .user-rating-section {
+            text-align: center;
+        }
+
+        .user-rating-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 400;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .rating-star {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .rating-star:hover {
+            transform: scale(1.15);
+            color: var(--primary);
+        }
+
+        .rating-star.active {
+            color: var(--primary);
+            animation: starPop 0.3s ease;
+        }
+
+        .rating-star.hovered {
+            color: var(--primary-dark);
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .rating-text {
+            text-align: center;
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-weight: 300;
+            min-height: 1.5rem;
+        }
+
+        /* BOTÓN CERRAR MODAL */
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-close-modal {
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-close-modal:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(201, 162, 39, 0.05);
+        }
+
+        /* NOTIFICACIÓN */
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--primary);
+            color: var(--text);
+            padding: 1.25rem 2rem;
+            transform: translateX(400px);
+            transition: transform 0.4s ease;
+            z-index: 2000;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .loader-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1.25rem;
+            }
+
+            .product-price {
+                margin-right: 0;
+                text-align: left;
+            }
+
+            .btn-view {
+                align-self: stretch;
+                text-align: center;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+
+            .modal-price {
+                font-size: 1.8rem;
+            }
+
+            .rating-stars {
+                gap: 0.5rem;
+            }
+
+            .rating-star {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface-light);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
 <body>
-
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <i class="fas fa-utensils"></i> <span>Sabor & Arte</span>
-        </div>
-        <div class="header-controls">
-            <div class="search-box" style="display: block;"> 
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Buscar...">
+    <!-- ANIMACIÓN DE CARGA -->
+    <div class="loader-container" id="loader">
+        <div class="loader-content">
+            <div class="loader-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
             </div>
-            <div class="cart-icon" onclick="toggleCart()">
-                <i class="fas fa-shopping-basket"></i>
-                <span class="cart-count" id="cartCount">0</span>
+            <div class="loader-title">GOURMET</div>
+            <div class="loader-subtitle">Cargando experiencia culinaria</div>
+            <div class="loader-line">
+                <div class="loader-progress"></div>
             </div>
-        </div>
-    </header>
-
-    <!-- Buscador Móvil -->
-    <div style="padding: 0 1rem; margin-bottom: 1rem; display: none;" id="mobileSearch">
-         <div class="search-box" style="display: block; width: 100%;">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInputMobile" placeholder="Buscar plato..." style="width: 100%;">
         </div>
     </div>
 
-    <!-- Sidebar Carrito -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Tu Pedido</h3>
-            <div class="close-cart" onclick="toggleCart()"><i class="fas fa-times"></i></div>
-        </div>
-        <div class="cart-items" id="cartItemsContainer">
-            <!-- Items del carrito -->
-            <div style="text-align:center; color: #999; margin-top: 3rem;">
-                <i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                <p>Tu carrito está vacío</p>
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="main-content" id="mainContent">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    <span>RESTAURANTE GOURMET</span>
+                </div>
             </div>
-        </div>
-        <div class="cart-total">
-            <div class="total-row">
-                <span>Total:</span>
-                <span id="cartTotal">$0.00</span>
+        </header>
+
+        <div class="container">
+            <div class="section-header">
+                <h1 class="section-title">MENÚ</h1>
+                <p class="section-subtitle">Descubre nuestra selección de platos</p>
             </div>
-            <button class="btn-checkout" onclick="generateReceipt()">
-                Generar Vale <i class="fas fa-file-invoice" style="margin-left: 5px;"></i>
-            </button>
+
+            <div id="menuContainer">
+                <!-- Categorías generadas dinámicamente -->
+            </div>
         </div>
     </div>
 
-    <!-- Hero -->
-    <section class="hero">
-        <h1>Experiencia Gourmet</h1>
-        <p>Ingredientes frescos, recetas tradicionales y pasión en cada plato.</p>
-    </section>
-
-    <!-- Filtros -->
-    <div class="filters-container">
-        <button class="filter-btn active" data-id="all"><i class="fas fa-th-large"></i> Todos</button>
-        <button class="filter-btn" data-id="breakfast"><i class="fas fa-coffee"></i> Desayunos</button>
-        <button class="filter-btn" data-id="lunch"><i class="fas fa-hamburger"></i> Almuerzos</button>
-        <button class="filter-btn" data-id="dinner"><i class="fas fa-moon"></i> Cena</button>
-        <button class="filter-btn" data-id="dessert"><i class="fas fa-ice-cream"></i> Postres</button>
-        <button class="filter-btn" data-id="drinks"><i class="fas fa-glass-cheers"></i> Bebidas</button>
-    </div>
-
-    <!-- Menú Grid -->
-    <section class="menu-container" id="menuContainer">
-        <!-- Se llena con JS -->
-    </section>
-
-    <!-- Modal Detalles -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-            <img src="" alt="" class="modal-img" id="modalImg">
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-image-container">
+                <img src="" alt="" class="modal-image" id="modalImage">
+            </div>
             <div class="modal-body">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-                    <h2 id="modalTitle" style="color: var(--secondary); font-size: 1.8rem;"></h2>
-                    <h3 id="modalPrice" style="color:var(--primary); font-size: 1.5rem;"></h3>
+                <div class="modal-category" id="modalCategory">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7V9H22V7L12 2Z"/></svg>
+                    <span id="modalCategoryText"></span>
                 </div>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-price" id="modalPrice"></div>
+                <p class="modal-description" id="modalDescription"></p>
                 
-                <div style="display:flex; gap:10px; margin-bottom:15px;">
-                    <span class="badge badge-star"><i class="fas fa-star"></i> 4.8</span>
-                    <span style="color:var(--text-gray); font-size:0.9rem; align-self:center;">120 reviews</span>
+                <div class="rating-section">
+                    <div class="rating-header">
+                        <span class="rating-title">Valoración de clientes</span>
+                        <div class="current-rating">
+                            <span class="current-rating-value" id="currentRating">0.0</span>
+                            <span class="rating-stars-display" id="ratingStarsDisplay"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="user-rating-section">
+                        <div class="user-rating-title">¿Qué te pareció este plato?</div>
+                        <div class="rating-stars" id="ratingStars">
+                            <span class="rating-star" data-value="1">★</span>
+                            <span class="rating-star" data-value="2">★</span>
+                            <span class="rating-star" data-value="3">★</span>
+                            <span class="rating-star" data-value="4">★</span>
+                            <span class="rating-star" data-value="5">★</span>
+                        </div>
+                        <div class="rating-text" id="ratingText">Selecciona una estrella para valorar</div>
+                    </div>
                 </div>
 
-                <p id="modalDesc" style="color: var(--text-gray); line-height: 1.6; margin-bottom: 20px; font-size: 1rem;"></p>
-                
-                <button class="btn-add" style="width: 100%; justify-content: center; padding: 15px;" onclick="addToCartFromModal()">
-                    <i class="fas fa-plus"></i> Añadir al Pedido
-                </button>
+                <div class="modal-actions">
+                    <button class="btn-close-modal" onclick="closeModal()">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Vale / Ticket -->
-    <div class="modal-overlay" id="receiptModal">
-        <div class="modal-content receipt-modal">
-            <button class="modal-close" onclick="closeReceipt()"><i class="fas fa-times"></i></button>
-            <div class="receipt-content">
-                <div class="receipt-header">
-                    <span class="receipt-logo"><i class="fas fa-utensils"></i> SABOR & ARTE</span>
-                    <div class="receipt-info">
-                        Calle Principal 123, Ciudad<br>
-                        Tel: +123 456 7890<br>
-                        Fecha: <span id="receiptDate"></span><br>
-                        Pedido #: <span id="receiptId"></span>
-                    </div>
-                </div>
-                
-                <div class="receipt-items" id="receiptItemsList">
-                    <!-- Lista generada por JS -->
-                </div>
-
-                <div class="receipt-total-section">
-                    <div class="receipt-total-row">
-                        <span>TOTAL A PAGAR</span>
-                        <span id="receiptTotal"></span>
-                    </div>
-                </div>
-
-                <div class="qr-container">
-                    <div id="qrcode"></div>
-                </div>
-                <p style="font-size: 0.7rem; color: #999;">Escanea para ver detalles del pedido</p>
-
-                <div class="receipt-footer">
-                    ¡Gracias por su visita!<br>
-                    www.saborarte.com
-                </div>
-
-                <button class="btn-print" onclick="window.print()">
-                    <i class="fas fa-print"></i> Imprimir Vale
-                </button>
-            </div>
-        </div>
+    <!-- NOTIFICACIÓN -->
+    <div class="notification" id="notification">
+        <span id="notificationText">Valoración guardada</span>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="logo" style="justify-content: center; color: white; margin-bottom: 1rem;">
-            <i class="fas fa-utensils"></i> <span>Sabor & Arte</span>
-        </div>
-        <p style="opacity: 0.8; margin-bottom: 5px;">Calle Principal 123, Ciudad Gastronómica</p>
-        <p style="opacity: 0.6; font-size: 0.9rem;">Abierto: 08:00 AM - 11:00 PM</p>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <p style="font-size: 0.75rem; opacity: 0.4; margin-top: 2rem;">&copy; 2023 Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- JAVASCRIPT -->
     <script>
-        // --- DATOS EXPANDIDOS ---
-        const menu = [
-            { id: 1, title: "Huevos Benedictinos", category: "breakfast", price: 12.99, img: "https://images.unsplash.com/photo-1525351484163-7529414395d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Huevos pochados sobre pan tostado con jamón serrano y salsa holandesa.", tags: ["star"] },
-            { id: 2, title: "Hamburguesa BBQ", category: "lunch", price: 15.50, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Carne Angus, queso cheddar, cebolla caramelizada y salsa BBQ ahumada.", tags: ["spicy"] },
-            { id: 3, title: "Batido Verde", category: "drinks", price: 6.00, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Espinaca, manzana verde, piña y agua de coco. 100% Natural.", tags: ["vegan"] },
-            { id: 4, title: "Panqueques Azules", category: "breakfast", price: 9.50, img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Con arándanos frescos, sirope de arce puro y mantequilla.", tags: ["star"] },
-            { id: 5, title: "Pasta Trufada", category: "dinner", price: 22.00, img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Fettuccine artesanal con crema de trufa negra y parmesano reggiano.", tags: ["star", "vegan"] },
-            { id: 6, title: "Tacos al Pastor", category: "lunch", price: 10.00, img: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Tortilla de maíz, cerdo marinado, piña, cilantro y cebolla.", tags: ["spicy"] },
-            { id: 7, title: "Salmón a la Parrilla", category: "dinner", price: 24.50, img: "https://images.unsplash.com/photo-1467003909585-2f8a7270028d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Salmón fresco con espárragos y puré de patatas trufado.", tags: ["star"] },
-            { id: 8, title: "Cheesecake de Fresa", category: "dessert", price: 8.00, img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Clásico pastel de queso con coulis de fresas naturales.", tags: [] },
-            { id: 9, title: "Tiramisú", category: "dessert", price: 9.00, img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Postre italiano con mascarpone, café espresso y cacao.", tags: ["star"] },
-            { id: 10, title: "Limonada Rosa", category: "drinks", price: 5.50, img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Refrescante limonada con un toque de frutos rojos y menta.", tags: ["vegan"] },
-            { id: 11, title: "Ensalada César", category: "lunch", price: 11.00, img: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Lechuga romana, crutones, parmesano y aderezo César original.", tags: [] },
-            { id: 12, title: "Pizza Margarita", category: "dinner", price: 14.00, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", desc: "Masa madre, salsa de tomate San Marzano, mozzarella y albahaca.", tags: ["vegan"] }
-        ];
+        // Iconos por categoría
+        const categoryIcons = {
+            "Entradas": "M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2M12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20M12 6C8 6 6 8 6 12C6 16 8 18 12 18C16 18 18 16 18 12C18 8 16 6 12 6Z",
+            "Carnes": "M12 2C10 2 8 3 8 5C8 6 8.5 6.5 9 7C7 7 5 8 5 11C5 14 7 15 9 15H15C17 15 19 14 19 11C19 8 17 7 15 7C15.5 6.5 16 6 16 5C16 3 14 2 12 2M12 4C12.5 4 13 4.5 13 5C13 5.5 12.5 6 12 6C11.5 6 11 5.5 11 5C11 4.5 11.5 4 12 4M9 17V19H15V17H9Z",
+            "Pescados y Mariscos": "M12 2C10 2 8 3 8 5C8 6 8.5 6.5 9 7C7 7 5 8 5 11C5 14 7 15 9 15H15C17 15 19 14 19 11C19 8 17 7 15 7C15.5 6.5 16 6 16 5C16 3 14 2 12 2M12 4C12.5 4 13 4.5 13 5C13 5.5 12.5 6 12 6C11.5 6 11 5.5 11 5C11 4.5 11.5 4 12 4Z",
+            "Pastas": "M4 2V8H20V2H18V6H16V2H14V6H12V2H10V6H8V2H6V6H4M2 10V12H5V10H2M7 10V12H10V10H7M12 10V12H15V10H12M17 10V12H20V10H17M22 10V12H22V10M2 14V16H5V14H2M7 14V16H10V14H7M12 14V16H15V14H12M17 14V16H20V14H17M22 14V16H22V14M2 18V20H5V18H2M7 18V20H10V18H7M12 18V20H15V18H12M17 18V20H20V18H17M22 18V20H22V18Z",
+            "Postres": "M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2M12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20M12 6C9 6 7 8 7 11C7 14 9 16 12 18C15 16 17 14 17 11C17 8 15 6 12 6Z"
+        };
 
-        // --- ESTADO ---
-        let cart = [];
-        let currentModalItem = null;
+        // DATOS DE PRODUCTOS
+        const menuData = {
+            "Entradas": [
+                { id: 101, name: "Tartar de Atún Rojo", price: 18.50, description: "Finas láminas de atún rojo del Mediterráneo marinadas en aceite de sésamo tostado, acompañadas de aguacate, cebolla morada encurtida y toques de jengibre fresco. Servido con chips de wonton casero.", rating: 4.8, reviews: 156, userRating: 0, image: "https://images.unsplash.com/photo-1546272989-40c92939c6c5?w=600&h=400&fit=crop" },
+                { id: 102, name: "Carpaccio de Res Wagyu", price: 24.00, description: "Láminas ultrafinas de wagyu japonés A5, aderezadas con aceite de trufa negra, alcaparras sicilianas, rúcula silvestre y lascas de parmesano reggiano de 36 meses.", rating: 4.9, reviews: 203, userRating: 0, image: "https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?w=600&h=400&fit=crop" },
+                { id: 103, name: "Burrata de Puglia", price: 16.50, description: "Auténtica burrata traída directamente de Italia, sobre lecho de tomates heirloom asados, pesto genovés, piñones tostados y reducción de vinagre balsámico de Módena.", rating: 4.7, reviews: 189, userRating: 0, image: "https://images.unsplash.com/photo-1529312266912-b33cf6227e24?w=600&h=400&fit=crop" },
+                { id: 104, name: "Vieiras Gratinadas", price: 22.00, description: "Vieiras frescas de Hokkaido gratinadas con mantequilla de ajo, pan panko japonés y hierbas provenzales. Finalizadas con espuma de limón cítrico.", rating: 4.8, reviews: 134, userRating: 0, image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=600&h=400&fit=crop" },
+                { id: 105, name: "Foie Gras Mi-Cuit", price: 28.00, description: "Terrina de foie gras de pato elaborada en baja temperatura durante 48 horas, acompañada de chutney de higos, brioche tostado y maldon.", rating: 4.9, reviews: 167, userRating: 0, image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&h=400&fit=crop" },
+                { id: 106, name: "Ceviche Peruano Clásico", price: 19.50, description: "Pesca del día marinada en leche de tigre tradicional con ají limo, cebolla roja, cilantro fresco y maíz cancha. Servido con camote glaseado.", rating: 4.7, reviews: 245, userRating: 0, image: "https://images.unsplash.com/photo-1535400255456-984241443b29?w=600&h=400&fit=crop" },
+                { id: 107, name: "Sopa de Langosta", price: 21.00, description: "Crema bisque de langosta bretona con brandy cognac, nata fresca de Normandía y medallones de langosta flameados. Decorada con caviar de esturión.", rating: 4.8, reviews: 112, userRating: 0, image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=400&fit=crop" },
+                { id: 108, name: "Ensalada de Pulpo Gallego", price: 20.50, description: "Pulpo cocido a la gallega sobre cama de patatas confitadas, pimentón de la Vera, aceite de oliva arbequina y escamas de sal marina.", rating: 4.6, reviews: 178, userRating: 0, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&h=400&fit=crop" },
+                { id: 109, name: "Croquetas de Jamón Ibérico", price: 14.00, description: "Croquetas cremosas de bechamel con jamón ibérico de bellota 5J, empanadas en pan rallado artesanal y fritas en aceite de oliva virgen extra.", rating: 4.7, reviews: 289, userRating: 0, image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&h=400&fit=crop" },
+                { id: 110, name: "Tacos de Langostino Tempura", price: 17.50, description: "Tortillas de maíz nixtamalizado con langostinos en tempura de cerveza, salsa de aguacate, repollo morado encurtido y salsa de chipotle dulce.", rating: 4.8, reviews: 198, userRating: 0, image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=400&fit=crop" },
+                { id: 111, name: "Gambas al Ajillo Trufado", price: 19.00, description: "Gambas frescas de Sanlúcar salteadas en aceite de oliva con ajo laminado, guindilla y virutas de trufa negra fresca. Servido en cazuela de barro.", rating: 4.9, reviews: 156, userRating: 0, image: "https://images.unsplash.com/photo-1551248429-40975aa4de74?w=600&h=400&fit=crop" },
+                { id: 112, name: "Tartaleta de Queso de Cabra", price: 15.50, description: "Masa brisée casera rellena de queso de cabra cremoso, cebolla caramelizada, tomates secos y albahaca fresca. Glaseada con miel de lavanda.", rating: 4.6, reviews: 134, userRating: 0, image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&h=400&fit=crop" }
+            ],
+            "Carnes": [
+                { id: 201, name: "Solomillo de Ternera", price: 42.00, description: "Solomillo de ternera gallega madurada 45 días, cocinada a baja temperatura y terminada a la parrilla de carbón. Acompañada de puré de trufa y espárragos blancos.", rating: 4.9, reviews: 312, userRating: 0, image: "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?w=600&h=400&fit=crop" },
+                { id: 202, name: "Chuletón de Buey Gallego", price: 58.00, description: "Chuletón de buey gallego de 1.2kg, madurado en cámara seca durante 60 días. Asado a la parrilla de carbón de encina. Para compartir (mínimo 2 personas).", rating: 4.9, reviews: 278, userRating: 0, image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&h=400&fit=crop" },
+                { id: 203, name: "Carrillera de Cerdo Ibérico", price: 32.50, description: "Carrilleras de cerdo ibérico estofadas durante 12 horas al vino tinto Ribera del Duero, con puré de patata y zanahoria glaseada.", rating: 4.8, reviews: 198, userRating: 0, image: "https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=600&h=400&fit=crop" },
+                { id: 204, name: "Filete Mignon Rossini", price: 46.00, description: "Medallón de solomillo de ternera con foie gras de pato escalope, salsa perigordine de trufa y reducción de oporto vintage.", rating: 4.9, reviews: 156, userRating: 0, image: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&h=400&fit=crop" },
+                { id: 205, name: "Rack de Cordero Lechal", price: 38.00, description: "Carré de cordero lechal asado con costra de hierbas provenzales, acompañado de couscous de verduras y salsa de menta fresca.", rating: 4.7, reviews: 134, userRating: 0, image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop" },
+                { id: 206, name: "Ossobuco alla Milanese", price: 36.50, description: "Ossobuco de ternera braseado durante 4 horas con gremolata de limón, acompañado de risotto a la milanesa con azafrán.", rating: 4.8, reviews: 167, userRating: 0, image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=400&fit=crop" },
+                { id: 207, name: "Entrecot de Wagyu A5", price: 95.00, description: "Entrecot de wagyu japonés A5 de Kobe, con marmoreo excepcional. Cocinado teppanyaki en mesa con verduras de temporada y salsa ponzu.", rating: 5.0, reviews: 89, userRating: 0, image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&h=400&fit=crop" },
+                { id: 208, name: "Magret de Pato", price: 34.00, description: "Magret de pato crujiente con piel dorada, salsa de frutos rojos al oporto, puré de batata y endivias caramelizadas.", rating: 4.7, reviews: 145, userRating: 0, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop" },
+                { id: 209, name: "T-Bone Steak Premium", price: 52.00, description: "T-Bone de 800g de res Nebraska, con filete y entrecot en un solo corte. Asado a la perfección con hueso para máximo sabor.", rating: 4.8, reviews: 234, userRating: 0, image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&h=400&fit=crop" },
+                { id: 210, name: "Costillas de Cordero BBQ", price: 35.00, description: "Costillas de cordero glaseadas con salsa barbacoa de bourbon casera, cocinadas lentamente durante 6 horas. Acompañadas de coleslaw y cornbread.", rating: 4.6, reviews: 178, userRating: 0, image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop" },
+                { id: 211, name: "Lomo de Venado", price: 41.00, description: "Lomo de venado salvaje de Escocia, sellado en sartén con manteca de hierbas, reducción de vino tinto y frutos del bosque.", rating: 4.8, reviews: 123, userRating: 0, image: "https://images.unsplash.com/photo-1558030006-450675393462?w=600&h=400&fit=crop" },
+                { id: 212, name: "Hamburguesa Gourmet", price: 28.00, description: "Carne de vaca rubia gallega picada a mano, queso cheddar añejo, bacon ahumado, cebolla caramelizada y salsa especial de la casa en brioche artesanal.", rating: 4.7, reviews: 456, userRating: 0, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&h=400&fit=crop" }
+            ],
+            "Pescados y Mariscos": [
+                { id: 301, name: "Lubina a la Sal", price: 38.00, description: "Lubina salvaje de estero gallego cocida en costra de sal marina, servida con verduras salteadas y salsa de azafrán.", rating: 4.8, reviews: 198, userRating: 0, image: "https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=600&h=400&fit=crop" },
+                { id: 302, name: "Rodaballo al Horno", price: 45.00, description: "Rodaballo de 3kg a la espalda con refrito de ajo, pimentón y aceite de oliva virgen extra. Para compartir (mínimo 2 personas).", rating: 4.9, reviews: 167, userRating: 0, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop" },
+                { id: 303, name: "Bacalao al Pil Pil", price: 32.00, description: "Lomos de bacalao desalado tradicional con emulsión de ajo y aceite de oliva, guindilla y perejil fresco. Especialidad vasca.", rating: 4.7, reviews: 234, userRating: 0, image: "https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=600&h=400&fit=crop" },
+                { id: 304, name: "Langosta Thermidor", price: 68.00, description: "Langosta azul de Bretaña gratinada con salsa thermidor (bechamel, mostaza dijon, brandy y queso gruyère), servida en su caparazón.", rating: 4.9, reviews: 98, userRating: 0, image: "https://images.unsplash.com/photo-1551248429-40975aa4de74?w=600&h=400&fit=crop" },
+                { id: 305, name: "Salmón Teriyaki", price: 29.50, description: "Filete de salmón noruego glaseado con salsa teriyaki casera, semillas de sésamo tostado, arroz jazmín y edamames.", rating: 4.6, reviews: 312, userRating: 0, image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=400&fit=crop" },
+                { id: 306, name: "Mero en Salsa Verde", price: 36.00, description: "Mero de profundidad con salsa verde de almejas, vino blanco, ajo y perejil. Acompañado de patatas cocidas.", rating: 4.7, reviews: 145, userRating: 0, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop" },
+                { id: 307, name: "Paella de Mariscos", price: 34.00, description: "Arroz bomba con gambas, mejillones, almejas, sepia y azafrán de La Mancha. Cocinada tradicionalmente a leña.", rating: 4.8, reviews: 389, userRating: 0, image: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=600&h=400&fit=crop" },
+                { id: 308, name: "Atún Rojo a la Plancha", price: 42.00, description: "Lomo de atún rojo del Mediterráneo sellado, con costra de sésamo, salsa de soja dulce y ensalada de algas wakame.", rating: 4.9, reviews: 178, userRating: 0, image: "https://images.unsplash.com/photo-1546272989-40c92939c6c5?w=600&h=400&fit=crop" },
+                { id: 309, name: "Zarzuela de Pescado", price: 38.50, description: "Surtido de pescados y mariscos en salsa marinera con tomate, azafrán y brandy. Especialidad catalana tradicional.", rating: 4.7, reviews: 156, userRating: 0, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&h=400&fit=crop" },
+                { id: 310, name: "Dorada a la Espalda", price: 31.00, description: "Dorada salvaje asada con patatas panaderas, cebolla, tomate y pimientos asados. Aliñada con aceite de oliva arbequina.", rating: 4.6, reviews: 198, userRating: 0, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&h=400&fit=crop" },
+                { id: 311, name: "Rape con Almendras", price: 35.00, description: "Cola de rape con salsa de almendras tostadas, ajo y perejil. Acompañado de arroz salvaje y verduras de temporada.", rating: 4.8, reviews: 134, userRating: 0, image: "https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=600&h=400&fit=crop" },
+                { id: 312, name: "Sushi Omakase", price: 55.00, description: "Selección de 15 piezas de sushi y sashimi premium elegidas por el chef, incluyendo atún toro, vieira y anguila.", rating: 4.9, reviews: 267, userRating: 0, image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&h=400&fit=crop" }
+            ],
+            "Pastas": [
+                { id: 401, name: "Spaghetti alla Carbonara", price: 22.00, description: "Spaghetti artesanales con yema de huevo campero, guanciale curado, queso pecorino romano DOP y pimienta negra molida.", rating: 4.8, reviews: 456, userRating: 0, image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&h=400&fit=crop" },
+                { id: 402, name: "Tagliatelle al Tartufo", price: 34.00, description: "Tagliatelle frescas con mantequilla, queso parmesano y generosas virutas de trufa negra fresca de Alba.", rating: 4.9, reviews: 234, userRating: 0, image: "https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=600&h=400&fit=crop" },
+                { id: 403, name: "Ravioli de Langosta", price: 29.50, description: "Ravioli rellenos de langosta y ricotta, con salsa de tomate San Marzano, albahaca fresca y aceite de oliva virgen extra.", rating: 4.7, reviews: 189, userRating: 0, image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&h=400&fit=crop" },
+                { id: 404, name: "Lasagna alla Bolognese", price: 24.00, description: "Lasagna tradicional con ragú de ternera cocinado 6 horas, bechamel, queso gratinado y parmesano reggiano.", rating: 4.8, reviews: 312, userRating: 0, image: "https://images.unsplash.com/photo-1574868235872-1663edcb4569?w=600&h=400&fit=crop" },
+                { id: 405, name: "Pappardelle al Cinghiale", price: 28.50, description: "Pappardelle anchas con ragú de jabalí estofado en vino tinto, tomate, romero y parmesano.", rating: 4.7, reviews: 145, userRating: 0, image: "https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=600&h=400&fit=crop" },
+                { id: 406, name: "Gnocchi di Patate", price: 21.00, description: "Ñoquis de patata caseros con salsa de queso gorgonzola dolce, nueces tostadas y pera caramelizada.", rating: 4.6, reviews: 178, userRating: 0, image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&h=400&fit=crop" },
+                { id: 407, name: "Fettuccine Alfredo", price: 23.50, description: "Fettuccine con salsa Alfredo original (mantequilla, crema y parmesano), pollo grillado y perejil fresco.", rating: 4.5, reviews: 289, userRating: 0, image: "https://images.unsplash.com/photo-1556761223-4c4282c73f77?w=600&h=400&fit=crop" },
+                { id: 408, name: "Penne all'Arrabbiata", price: 19.00, description: "Penne rigate con salsa de tomate picante, ajo, guindilla y perejil. Opción vegana disponible.", rating: 4.4, reviews: 198, userRating: 0, image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&h=400&fit=crop" },
+                { id: 409, name: "Tortelloni di Ricotta", price: 25.00, description: "Tortelloni rellenos de ricotta y espinacas, con salsa de mantequilla salvia y avellanas tostadas.", rating: 4.7, reviews: 156, userRating: 0, image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&h=400&fit=crop" },
+                { id: 410, name: "Linguine alle Vongole", price: 27.00, description: "Linguine con almejas frescas del Cantábrico, ajo, guindilla, vino blanco y perejil. Especialidad napolitana.", rating: 4.8, reviews: 234, userRating: 0, image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&h=400&fit=crop" },
+                { id: 411, name: "Bucatini all'Amatriciana", price: 21.50, description: "Bucatini con salsa de tomate, guanciale, pecorino romano y pimientona. Receta tradicional de Amatrice.", rating: 4.6, reviews: 167, userRating: 0, image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&h=400&fit=crop" },
+                { id: 412, name: "Rigatoni alla Carbonara", price: 23.00, description: "Rigatoni con carbonara de trufa negra, yema de huevo curada y pancetta ibérica.", rating: 4.8, reviews: 198, userRating: 0, image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&h=400&fit=crop" }
+            ],
+            "Postres": [
+                { id: 501, name: "Tiramisú Clásico", price: 12.00, description: "Capas de bizcocho savoiardi empapado en café espresso, mascarpone cremoso y cacao amargo en polvo. Receta original del Veneto.", rating: 4.9, reviews: 567, userRating: 0, image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&h=400&fit=crop" },
+                { id: 502, name: "Crème Brûlée", price: 11.50, description: "Crema de vainilla de Madagascar con caramelo quemado en la superficie. Servido con frutos rojos frescos.", rating: 4.8, reviews: 345, userRating: 0, image: "https://images.unsplash.com/photo-1470124182917-cc6e71b7e7b6?w=600&h=400&fit=crop" },
+                { id: 503, name: "Soufflé de Chocolate", price: 14.00, description: "Soufflé de chocolate Valrhona 70% con corazón líquido, servido con helado de vainilla bourbon.", rating: 4.9, reviews: 289, userRating: 0, image: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&h=400&fit=crop" },
+                { id: 504, name: "Panna Cotta", price: 10.50, description: "Panna cotta de vainilla con coulis de frutos rojos y menta fresca. Textura sedosa y delicada.", rating: 4.7, reviews: 234, userRating: 0, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&h=400&fit=crop" },
+                { id: 505, name: "Tarta de Santiago", price: 9.50, description: "Tarta tradicional gallega de almendra, sin harina, con azúcar glass y cruz de Santiago. Receta centenaria.", rating: 4.6, reviews: 178, userRating: 0, image: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600&h=400&fit=crop" },
+                { id: 506, name: "Mousse de Limón", price: 10.00, description: "Mousse ligera de limón con base de galleta, merengue italiano y ralladura de limón confitado.", rating: 4.5, reviews: 156, userRating: 0, image: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=600&h=400&fit=crop" },
+                { id: 507, name: "Profiteroles", price: 13.50, description: "Bollos de pasta choux rellenos de helado de vainilla, bañados en chocolate caliente y almendras laminadas.", rating: 4.8, reviews: 212, userRating: 0, image: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&h=400&fit=crop" },
+                { id: 508, name: "Cheesecake de Fresa", price: 12.50, description: "Cheesecake estilo Nueva York con coulis de fresas naturales y base de galleta digestive.", rating: 4.7, reviews: 298, userRating: 0, image: "https://images.unsplash.com/photo-1524351199678-941a58a3df26?w=600&h=400&fit=crop" },
+                { id: 509, name: "Tarta Tatin", price: 13.00, description: "Tarta de manzanas caramelizadas invertida, servida templada con helado de vainilla.", rating: 4.8, reviews: 167, userRating: 0, image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&h=400&fit=crop" },
+                { id: 510, name: "Helado Artesanal", price: 8.50, description: "Selección de 3 sabores de helado artesanal: vainilla de Madagascar, chocolate belga y pistacho de Bronte.", rating: 4.6, reviews: 234, userRating: 0, image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop" },
+                { id: 511, name: "Coulant de Chocolate", price: 13.50, description: "Bizcocho de chocolate con corazón fundido, acompañado de helado de turrón.", rating: 4.9, reviews: 445, userRating: 0, image: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&h=400&fit=crop" },
+                { id: 512, name: "Sorbete de Mango", price: 9.00, description: "Sorbete de mango alphilso con frutas tropicales frescas y menta. Opción vegana.", rating: 4.5, reviews: 134, userRating: 0, image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop" }
+            ]
+        };
 
-        // --- INICIALIZACIÓN ---
-        const menuContainer = document.getElementById("menuContainer");
-        const filterBtns = document.querySelectorAll(".filter-btn");
-        const searchInput = document.getElementById("searchInput");
-        const searchInputMobile = document.getElementById("searchInputMobile");
+        let currentProduct = null;
+        let selectedRating = 0;
 
-        if(window.innerWidth <= 500) {
-            document.getElementById('mobileSearch').style.display = 'block';
-            document.querySelector('.search-box').style.display = 'none';
-        }
-
-        window.addEventListener("DOMContentLoaded", () => {
-            displayMenuItems(menu);
+        // INICIALIZACIÓN
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+                renderMenu();
+            }, 3000);
         });
 
-        // --- RENDERIZADO ---
-        function displayMenuItems(items) {
-            let displayMenu = items.map(item => {
-                let tagsHtml = '';
-                if(item.tags.includes('spicy')) tagsHtml += '<span class="badge badge-spicy"><i class="fas fa-pepper-hot"></i></span>';
-                if(item.tags.includes('vegan')) tagsHtml += '<span class="badge badge-vegan"><i class="fas fa-leaf"></i></span>';
-                if(item.tags.includes('star')) tagsHtml += '<span class="badge badge-star"><i class="fas fa-star"></i></span>';
-
-                return `
-                <article class="menu-item">
-                    <div class="item-img-wrapper">
-                        <img src="${item.img}" alt="${item.title}" class="item-img" loading="lazy">
-                        <div class="badges">${tagsHtml}</div>
+        // RENDERIZAR MENÚ
+        function renderMenu() {
+            const container = document.getElementById('menuContainer');
+            
+            Object.keys(menuData).forEach(category => {
+                const products = menuData[category];
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                
+                section.innerHTML = `
+                    <div class="category-header">
+                        <svg class="category-icon" viewBox="0 0 24 24">
+                            <path d="${categoryIcons[category] || categoryIcons['Carnes']}"/>
+                        </svg>
+                        <h2 class="category-title">${category}</h2>
+                        <span class="category-count">${products.length} platos</span>
                     </div>
-                    <div class="item-content">
-                        <div class="item-header">
-                            <h4 class="item-title">${item.title}</h4>
-                            <h4 class="item-price">$${item.price}</h4>
-                        </div>
-                        <p class="item-desc">${item.desc}</p>
-                        <div class="item-actions">
-                            <button class="btn-details" onclick="openModal(${item.id})" aria-label="Ver detalles"><i class="fas fa-info-circle"></i></button>
-                            <button class="btn-add" onclick="addToCart(${item.id})"><i class="fas fa-plus"></i> Añadir</button>
-                        </div>
+                    <div class="product-list">
+                        ${products.map(product => `
+                            <div class="product-item" onclick="openModal(${product.id}, '${category}')">
+                                <div class="product-info">
+                                    <div class="product-name">${product.name}</div>
+                                    <div class="product-description-preview">${product.description.substring(0, 60)}...</div>
+                                </div>
+                                <div class="product-price">$${product.price.toFixed(2)}</div>
+                                <button class="btn-view" onclick="event.stopPropagation(); openModal(${product.id}, '${category}')">
+                                    Ver más
+                                </button>
+                            </div>
+                        `).join('')}
                     </div>
-                </article>
                 `;
+                
+                container.appendChild(section);
             });
-            menuContainer.innerHTML = displayMenu.join("");
         }
 
-        // --- FILTRADO ---
-        filterBtns.forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                e.currentTarget.classList.add('active');
-                const category = e.currentTarget.dataset.id;
-                const filtered = category === "all" ? menu : menu.filter(item => item.category === category);
-                displayMenuItems(filtered);
-            });
-        });
-
-        // --- BUSCADOR ---
-        function handleSearch(e) {
-            const term = e.target.value.toLowerCase();
-            const filtered = menu.filter(item => item.title.toLowerCase().includes(term));
-            displayMenuItems(filtered);
-        }
-        if(searchInput) searchInput.addEventListener('input', handleSearch);
-        if(searchInputMobile) searchInputMobile.addEventListener('input', handleSearch);
-
-        // --- CARRITO ---
-        function toggleCart() {
-            document.getElementById('cartSidebar').classList.toggle('open');
-            if(document.getElementById('cartSidebar').classList.contains('open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
+        // ENCONTRAR PRODUCTO
+        function findProduct(id, category) {
+            return menuData[category].find(p => p.id === id);
         }
 
-        function addToCart(id) {
-            const item = menu.find(i => i.id === id);
-            cart.push(item);
-            updateCartUI();
-            const btn = event.target.closest('button');
-            const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Listo';
-            btn.style.background = '#27ae60';
-            setTimeout(() => { btn.innerHTML = originalHTML; btn.style.background = ''; }, 1000);
-        }
+        // ABRIR MODAL
+        function openModal(productId, category) {
+            currentProduct = findProduct(productId, category);
+            if (!currentProduct) return;
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+            document.getElementById('modalImage').src = currentProduct.image;
+            document.getElementById('modalCategoryText').textContent = category;
+            document.querySelector('.modal-category svg path').setAttribute('d', categoryIcons[category] || categoryIcons['Carnes']);
+            document.getElementById('modalTitle').textContent = currentProduct.name;
+            document.getElementById('modalPrice').textContent = `$${currentProduct.price.toFixed(2)}`;
+            document.getElementById('modalDescription').textContent = currentProduct.description;
+            document.getElementById('currentRating').textContent = currentProduct.rating.toFixed(1);
+            document.getElementById('ratingStarsDisplay').textContent = '★'.repeat(Math.floor(currentProduct.rating));
+            
+            selectedRating = currentProduct.userRating || 0;
+            updateStarDisplay(selectedRating);
+            updateRatingText(selectedRating);
 
-        function updateCartUI() {
-            const cartContainer = document.getElementById('cartItemsContainer');
-            const countSpan = document.getElementById('cartCount');
-            const totalSpan = document.getElementById('cartTotal');
-            countSpan.innerText = cart.length;
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = `<div style="text-align:center; color: #999; margin-top: 3rem;"><i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i><p>Tu carrito está vacío</p></div>`;
-                totalSpan.innerText = '$0.00';
-                return;
-            }
-
-            let total = 0;
-            cartContainer.innerHTML = cart.map((item, index) => {
-                total += item.price;
-                return `
-                <div class="cart-item">
-                    <div class="cart-item-info"><h4>${item.title}</h4><p>$${item.price}</p></div>
-                    <div class="close-cart" style="width:30px; height:30px; background:#fee;" onclick="removeFromCart(${index})"><i class="fas fa-trash" style="color:#e74c3c; font-size: 0.8rem;"></i></div>
-                </div>`;
-            }).join("");
-            totalSpan.innerText = '$' + total.toFixed(2);
-        }
-
-        // --- MODAL DETALLES ---
-        function openModal(id) {
-            currentModalItem = menu.find(i => i.id === id);
-            document.getElementById('modalImg').src = currentModalItem.img;
-            document.getElementById('modalTitle').innerText = currentModalItem.title;
-            document.getElementById('modalDesc').innerText = currentModalItem.desc;
-            document.getElementById('modalPrice').innerText = '$' + currentModalItem.price;
-            const modal = document.getElementById('detailModal');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('active'), 10);
+            document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
+        // CERRAR MODAL
         function closeModal() {
-            const modal = document.getElementById('detailModal');
-            modal.classList.remove('active');
-            setTimeout(() => { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }, 300);
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            
+            if (currentProduct && selectedRating > 0) {
+                currentProduct.userRating = selectedRating;
+            }
         }
 
-        function addToCartFromModal() {
-            if(currentModalItem) { addToCart(currentModalItem.id); closeModal(); setTimeout(() => toggleCart(), 300); }
-        }
-        document.getElementById('detailModal').addEventListener('click', (e) => { if(e.target.id === 'detailModal') closeModal(); });
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
 
-        // --- GENERAR VALE CON QR ---
-        function generateReceipt() {
-            if(cart.length === 0) { alert("El carrito está vacío"); return; }
-            
-            // 1. Preparar datos
-            const orderId = Math.floor(Math.random() * 10000);
-            const date = new Date().toLocaleString();
-            let total = 0;
-            
-            // 2. Renderizar lista en el modal
-            const itemsListContainer = document.getElementById('receiptItemsList');
-            itemsListContainer.innerHTML = cart.map(item => {
-                total += item.price;
-                return `
-                <div class="receipt-item-row">
-                    <span class="receipt-item-name">${item.title}</span>
-                    <span class="receipt-item-price">$${item.price.toFixed(2)}</span>
-                </div>`;
-            }).join("");
+        // SISTEMA DE VALORACIÓN
+        const stars = document.querySelectorAll('.rating-star');
+        const ratingTexts = [
+            "Selecciona una estrella para valorar",
+            "No me gustó",
+            "Estuvo bien",
+            "Buen sabor",
+            "Muy rico",
+            "¡Excelente!"
+        ];
 
-            // 3. Actualizar totales y fecha
-            document.getElementById('receiptDate').innerText = date;
-            document.getElementById('receiptId').innerText = orderId;
-            document.getElementById('receiptTotal').innerText = '$' + total.toFixed(2);
-
-            // 4. Generar QR
-            // Limpiar QR anterior
-            document.getElementById('qrcode').innerHTML = "";
-            
-            // Datos para el QR (JSON string)
-            const qrData = JSON.stringify({
-                order: orderId,
-                date: date,
-                total: total.toFixed(2),
-                items: cart.map(i => i.title)
+        stars.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const value = parseInt(star.dataset.value);
+                updateStarDisplay(value, true);
+                updateRatingText(value);
             });
 
-            // Crear nuevo QR
-            new QRCode(document.getElementById("qrcode"), {
-                text: qrData,
-                width: 128,
-                height: 128,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.dataset.value);
+                updateStarDisplay(selectedRating);
+                
+                star.style.transform = 'scale(1.15)';
+                setTimeout(() => {
+                    star.style.transform = '';
+                }, 200);
+
+                showNotification(`Valoración guardada: ${selectedRating} estrellas`);
             });
+        });
 
-            // 5. Mostrar Modal
-            const modal = document.getElementById('receiptModal');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('active'), 10);
+        document.getElementById('ratingStars').addEventListener('mouseleave', () => {
+            updateStarDisplay(selectedRating);
+            updateRatingText(selectedRating);
+        });
+
+        function updateStarDisplay(rating, isHover = false) {
+            stars.forEach(star => {
+                const value = parseInt(star.dataset.value);
+                star.classList.remove('active', 'hovered');
+                
+                if (value <= rating) {
+                    if (isHover) {
+                        star.classList.add('hovered');
+                    } else {
+                        star.classList.add('active');
+                    }
+                }
+            });
+        }
+
+        function updateRatingText(rating) {
+            document.getElementById('ratingText').textContent = ratingTexts[rating] || ratingTexts[0];
+        }
+
+        // NOTIFICACIÓN
+        function showNotification(text) {
+            const notification = document.getElementById('notification');
+            document.getElementById('notificationText').textContent = text;
+            notification.classList.add('show');
             
-            // Cerrar sidebar carrito
-            toggleCart();
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2500);
         }
 
-        function closeReceipt() {
-            const modal = document.getElementById('receiptModal');
-            modal.classList.remove('active');
-            setTimeout(() => { 
-                modal.style.display = 'none'; 
-                document.body.style.overflow = 'auto'; 
-                cart = []; // Vaciar carrito después de comprar
-                updateCartUI();
-            }, 300);
-        }
-        document.getElementById('receiptModal').addEventListener('click', (e) => { if(e.target.id === 'receiptModal') closeReceipt(); });
-
+        // TECLA ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
     </script>
 </body>
 </html>
